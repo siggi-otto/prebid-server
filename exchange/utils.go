@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"github.com/golang/glog"
 	"math/rand"
 
 	"github.com/buger/jsonparser"
@@ -29,9 +30,16 @@ func cleanOpenRTBRequests(ctx context.Context,
 	usersyncIfAmbiguous,
 	enforceCCPA bool) (requestsByBidder map[openrtb_ext.BidderName]*openrtb.BidRequest, aliases map[string]string, errs []error) {
 
+	glog.Warning("orig Imp size: %d", len(orig.Imp))
+	byteImp, _ := json.Marshal(orig.Imp)
+	glog.Warning("orig imp: %s", string(byteImp))
 	impsByBidder, errs := splitImps(orig.Imp)
 	if len(errs) > 0 {
 		return
+	}
+
+	for b, i := range impsByBidder {
+		glog.Warning("imp for bidder: %s, count of imps %d", b, len(i))
 	}
 
 	aliases, errs = parseAliases(orig)
