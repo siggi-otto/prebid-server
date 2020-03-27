@@ -30,16 +30,16 @@ func cleanOpenRTBRequests(ctx context.Context,
 	usersyncIfAmbiguous,
 	enforceCCPA bool) (requestsByBidder map[openrtb_ext.BidderName]*openrtb.BidRequest, aliases map[string]string, errs []error) {
 
-	glog.Warning("orig Imp size: %d", len(orig.Imp))
+	glog.Warningf("orig Imp size: %d", len(orig.Imp))
 	byteImp, _ := json.Marshal(orig.Imp)
-	glog.Warning("orig imp: %s", string(byteImp))
+	glog.Warningf("orig imp: %s", string(byteImp))
 	impsByBidder, errs := splitImps(orig.Imp)
 	if len(errs) > 0 {
 		return
 	}
 
 	for b, i := range impsByBidder {
-		glog.Warning("imp for bidder: %s, count of imps %d", b, len(i))
+		glog.Warningf("imp for bidder: %s, count of imps %d", b, len(i))
 	}
 
 	aliases, errs = parseAliases(orig)

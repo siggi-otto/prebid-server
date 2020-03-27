@@ -296,7 +296,7 @@ func (e *exchange) getAllBids(ctx context.Context, cleanRequests map[openrtb_ext
 		coreBidder := resolveBidder(string(bidderName), aliases)
 		bidderRunner := e.recoverSafely(func(aName openrtb_ext.BidderName, coreBidder openrtb_ext.BidderName, request *openrtb.BidRequest, bidlabels *pbsmetrics.AdapterLabels, conversions currencies.Conversions) {
 			// Passing in aName so a doesn't change out from under the go routine
-			glog.Warning("request send to bidder: %s", coreBidder)
+			glog.Warningf("request send to bidder: %s", coreBidder)
 			if bidlabels.Adapter == "" {
 				glog.Errorf("Exchange: bidlables for %s (%s) missing adapter string", aName, coreBidder)
 				bidlabels.Adapter = coreBidder
