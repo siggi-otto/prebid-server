@@ -119,6 +119,8 @@ func (rcv OrbidderAdapter) MakeBids(internalRequest *openrtb.BidRequest, externa
 			})
 		}
 	}
+	// set currency like returned from orbidder
+	bidResponse.Currency = bidResp.Cur
 	return bidResponse, nil
 }
 
